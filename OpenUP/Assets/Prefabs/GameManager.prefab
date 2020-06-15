@@ -43,5 +43,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de181b9e08ef0a84b9f57079b4509a01, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  escapeToQuitIsNeeded: 0
-  escapeToMenuIsNeeded: 0
+  escapeToQuitIsNeeded: 1
+  escapeToMenuIsNeeded: 1
