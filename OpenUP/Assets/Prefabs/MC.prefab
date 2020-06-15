@@ -148,43 +148,58 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 79e2d2526f942ef4da579bb174cdedde, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxDistance: 2
-  forceMultiplier: 100
+  maxDistance: 6
+  forceMultiplier: 30
   timeSlow: 0.4
   gravity: 0
   VignetteFollowsPlayer: 1
   blackFlame: {fileID: 8465743878820575710}
   blackFlameMat: {fileID: 2100000, guid: 89c34c6443bc1fc41be05a2685189bc0, type: 2}
-  cooldownDuration: 0.6
+  cooldownDuration: 0.9
   cooldownCurve:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
       time: 0
       value: 0
-      inSlope: -0.10109414
-      outSlope: -0.10109414
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0.2934452
-    - serializedVersion: 3
-      time: 0.43562472
-      value: 0.43787825
-      inSlope: 2.6779275
-      outSlope: 2.6779275
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.10216913
-      outWeight: 0.06144548
-    - serializedVersion: 3
-      time: 1
-      value: 1
       inSlope: 0
       outSlope: 0
       tangentMode: 0
       weightedMode: 0
       inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 2
+      outSlope: 2
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  opacityCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0.7
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 7.916206
+      outSlope: 7.916206
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.07296026
       outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
@@ -403,7 +418,7 @@ GameObject:
   - component: {fileID: 8465743878065866736}
   - component: {fileID: 8465743878065866737}
   - component: {fileID: 8465743878065866739}
-  - component: {fileID: 8465743878065866738}
+  - component: {fileID: 63744468754027849}
   m_Layer: 8
   m_Name: ShieldSprite
   m_TagString: Shield
@@ -497,8 +512,8 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 0
---- !u!61 &8465743878065866738
-BoxCollider2D:
+--- !u!60 &63744468754027849
+PolygonCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -510,7 +525,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 2.4973621}
+  m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -520,9 +535,12 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 69.91405, y: 18.234726}
-  m_EdgeRadius: 0
+  m_Points:
+    m_Paths:
+    - - {x: 36.5, y: -6.6}
+      - {x: -36.5, y: -6.6}
+      - {x: -25.5, y: 6.6}
+      - {x: 25.5, y: 6.6}
 --- !u!1 &8465743878250318625
 GameObject:
   m_ObjectHideFlags: 0
@@ -724,6 +742,7 @@ GameObject:
   - component: {fileID: 8465743878471275467}
   - component: {fileID: 8465743878471275476}
   - component: {fileID: 8465743878471275477}
+  - component: {fileID: 1558644900013372304}
   m_Layer: 8
   m_Name: ShieldSprite (1)
   m_TagString: Shield
@@ -803,7 +822,7 @@ BoxCollider2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8465743878471275465}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 0
@@ -843,6 +862,35 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 0
+--- !u!60 &1558644900013372304
+PolygonCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8465743878471275465}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 77.42, y: 13.24}
+    newSize: {x: 4.89, y: 0.84}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Points:
+    m_Paths:
+    - - {x: 36.5, y: -6.6}
+      - {x: -36.5, y: -6.6}
+      - {x: -25.5, y: 6.6}
+      - {x: 25.5, y: 6.6}
 --- !u!1 &8465743878725766281
 GameObject:
   m_ObjectHideFlags: 0
@@ -1001,6 +1049,7 @@ GameObject:
   - component: {fileID: 8465743879119127027}
   - component: {fileID: 8465743879119127036}
   - component: {fileID: 8465743879119127037}
+  - component: {fileID: 6849514502035610387}
   m_Layer: 8
   m_Name: ShieldSprite (2)
   m_TagString: Shield
@@ -1080,7 +1129,7 @@ BoxCollider2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8465743879119127025}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 0
@@ -1120,6 +1169,35 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 0
+--- !u!60 &6849514502035610387
+PolygonCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8465743879119127025}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 77.42, y: 13.24}
+    newSize: {x: 4.89, y: 0.84}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Points:
+    m_Paths:
+    - - {x: 36.5, y: -6.6}
+      - {x: -36.5, y: -6.6}
+      - {x: -25.5, y: 6.6}
+      - {x: 25.5, y: 6.6}
 --- !u!1 &8465743879447496536
 GameObject:
   m_ObjectHideFlags: 0
@@ -1132,6 +1210,7 @@ GameObject:
   - component: {fileID: 8465743879447496538}
   - component: {fileID: 8465743879447496539}
   - component: {fileID: 8465743879447496484}
+  - component: {fileID: 2872650258811423400}
   m_Layer: 8
   m_Name: ShieldSprite (3)
   m_TagString: Shield
@@ -1211,7 +1290,7 @@ BoxCollider2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8465743879447496536}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 0
@@ -1251,6 +1330,35 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 0
+--- !u!60 &2872650258811423400
+PolygonCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8465743879447496536}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 77.42, y: 13.24}
+    newSize: {x: 4.89, y: 0.84}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Points:
+    m_Paths:
+    - - {x: 36.5, y: -6.6}
+      - {x: -36.5, y: -6.6}
+      - {x: -25.5, y: 6.6}
+      - {x: 25.5, y: 6.6}
 --- !u!1 &8465743879511784170
 GameObject:
   m_ObjectHideFlags: 0
