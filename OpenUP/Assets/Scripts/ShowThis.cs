@@ -25,8 +25,14 @@ public class ShowThis : MonoBehaviour
 
     public void StartShow(float showTime)
     {
-        if (ShowRoutine != null) { StopCoroutine(ShowRoutine); }
+        if (ShowRoutine != null) { ResetText(); StopCoroutine(ShowRoutine); }
         ShowRoutine = StartCoroutine(ShowIE(showTime));
+    }
+
+    private void ResetText()
+    {
+        OPEN.GetComponent<TextMeshProUGUI>().enabled = false;
+        UP.GetComponent<TextMeshProUGUI>().enabled = false;
     }
 
     public IEnumerator ShowIE(float showTime)
@@ -43,11 +49,6 @@ public class ShowThis : MonoBehaviour
 
         Camera.main.backgroundColor = Color.black;
 
-        //for (int i = 0; i < player.GetComponentsInChildren<SpriteRenderer>().Length; i++)
-        //{
-        //    player.GetComponentsInChildren<SpriteRenderer>()[i].color = Color.white;
-        //}
-
         for (int i = 0; i < player.GetComponent<DotSpawner>().dots.Count; i++)
         {
             player.GetComponent<DotSpawner>().dots[i].GetComponent<SpriteRenderer>().color = Color.white;
@@ -61,11 +62,6 @@ public class ShowThis : MonoBehaviour
         yield return new WaitForSeconds(showTime);
         UP.GetComponent<TextMeshProUGUI>().enabled = false;
         Panel.GetComponent<Image>().enabled = false;
-
-        //for (int i = 0; i < player.GetComponentsInChildren<SpriteRenderer>().Length; i++)
-        //{
-        //    player.GetComponentsInChildren<SpriteRenderer>()[i].color = Color.black;
-        //}
 
         for (int i = 0; i < white.Length; i++)
         {

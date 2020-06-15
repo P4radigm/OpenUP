@@ -13,7 +13,6 @@ public class TutorialManager : MonoBehaviour
     [SerializeField] private GameObject TO;
     [SerializeField] private GameObject MOVE;
 
-    // Start is called before the first frame update
     void Start()
     {
         StartCoroutine(Tutorial(startTiming, wordTiming, spaceTiming));

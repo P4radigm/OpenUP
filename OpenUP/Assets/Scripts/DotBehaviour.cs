@@ -7,7 +7,7 @@ using UnityEngine.Rendering.Universal;
 
 public class DotBehaviour : MonoBehaviour
 {
-    public Transform target;
+    [SerializeField] private Transform target;
     public float speed;
     [SerializeField] private float velocityThreshold;
     [SerializeField] private float saturation;
@@ -24,10 +24,11 @@ public class DotBehaviour : MonoBehaviour
         DontDestroyOnLoad(GameObject.FindGameObjectWithTag("PP"));
         v = GameObject.FindGameObjectWithTag("PP").GetComponent<Volume>()?.profile;
         v.TryGet(out vg);
-        //vg.intensity.value = 0.09f;
+
+        dotSpawner = DotSpawner.instance;
         OpenUp = GameObject.FindGameObjectWithTag("OpenUP").GetComponent<ShowThis>();
         target = GameObject.FindGameObjectWithTag("Player").transform;
-        dotSpawner = DotSpawner.instance;
+
         Recolour(saturation, brightness);
     }
 
@@ -90,7 +91,6 @@ public class DotBehaviour : MonoBehaviour
             {
                 vg.intensity.value += 0.01f;
                 OpenUp.StartShow(0.3f);
-                //collision.gameObject.SetActive(false);
                 dotSpawner.dots.Remove(this.gameObject);
                 for (int i = 0; i < dotSpawner.dots.Count; i++)
                 {

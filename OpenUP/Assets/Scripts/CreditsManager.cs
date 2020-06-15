@@ -10,6 +10,7 @@ public class CreditsManager : MonoBehaviour
 {
     [SerializeField] private AnimationCurve vgBackCurve;
     [SerializeField] private float vgBackTiming;
+    [SerializeField] private float normalVgIntensity;
 
     [SerializeField] private float startTiming;
     [SerializeField] private float wordTiming;
@@ -19,43 +20,38 @@ public class CreditsManager : MonoBehaviour
     [SerializeField] private GameObject YOU;
     [SerializeField] private GameObject WIN;
     [SerializeField] private GameObject OPENED;
-    [SerializeField] private GameObject UP;
-
-    private float startAmnVg;
-    
+    [SerializeField] private GameObject UP;    
 
     private Coroutine vgBackCoroutine;
 
     private VolumeProfile v;
     private Vignette vg;
 
-    // Start is called before the first frame update
     void Start()
     {
         v = GameObject.FindGameObjectWithTag("PP").GetComponent<Volume>()?.profile;
         v.TryGet(out vg);
 
-        startAmnVg = vg.intensity.value;
-        FindOrAddKey(vgBackCurve, 0f, startAmnVg);
-        //StartCoroutine(EndCredits(startTiming, wordTiming, spaceTiming, enterTiming));
         StartVgBack();
     }
 
     private IEnumerator vgBackIE()
     {
+        float _currentIntensity = vg.intensity.value;
+
         float lerpTime = 0;
 
         while (lerpTime < 1)
         {
             lerpTime += Time.deltaTime / vgBackTiming;
-            float evaluatedLerpTime = vgBackCurve.Evaluate(lerpTime);
+            float _evaluatedLerpTime = vgBackCurve.Evaluate(lerpTime);
+            float _newIntensity = Mathf.Lerp(_currentIntensity, normalVgIntensity, _evaluatedLerpTime);
 
-            vg.intensity.value = evaluatedLerpTime;
+            vg.intensity.value = _newIntensity;
 
             yield return null;
         }
         StartCoroutine(EndCredits(startTiming, wordTiming, spaceTiming, enterTiming));
-        //blackFlame.SetActive(false);
 
         yield return null;
     }
@@ -95,18 +91,5 @@ public class CreditsManager : MonoBehaviour
 
         yield return new WaitForSeconds(2);
         SceneManager.LoadScene(0);
-    }
-
-    static void FindOrAddKey(AnimationCurve curve, float time, float value)
-    {
-        for (int i = 0; i < curve.keys.Length; ++i)
-        {
-            if (curve.keys[i].time == time)
-            {
-                curve.RemoveKey(i);
-                break;
-            }
-        }
-        int key = curve.AddKey(time, value);
     }
 }

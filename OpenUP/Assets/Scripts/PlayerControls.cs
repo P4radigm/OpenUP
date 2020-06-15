@@ -22,60 +22,57 @@ public class PlayerControls : MonoBehaviour
     [SerializeField] private AnimationCurve cooldownCurve;
     [SerializeField] private AnimationCurve opacityCurve;
     [SerializeField] private float showDurationDelay;
-    //[SerializeField] private AnimationCurve showFlameCurve;
 
-    //private float showDuration;
     private Transform playerTransform;
     private Camera mainCam;
-    //private LineRenderer directionVisual;
     private Rigidbody2D playerRigidbody2D;
-    private Vector3 playerPosition;
+
+    //Movement
     private Vector2 moveDirection;
     private Vector2 beginPointPos;
     private Vector2 endPointPos;
-    //private bool slowDown = false;
-    private bool beginPhaseMouse = true;
     private float moveDirectionDistance;
-    private float fixedDeltaTime;
     private float moveDirectionAngle = 0;
-    //private float prevMoveDirectionAngle = 0;
+    private bool beginPhaseMouse = true;
 
-    private bool flameCooldownStarted = true;
-    private float VPControl = 0;
+    //Game Feel
+    private float fixedDeltaTime;
 
+    //Visuals
     private VolumeProfile v;
     private Vignette vg;
-
     private Coroutine FlameCooldownRoutine;
     private Coroutine ShowFlameRoutine;
+    private float VPControl = 0;
+    private bool flameCooldownStarted = true;
+
+
 
     private void Awake()
     {
-        //Screen.SetResolution(2160, 1080, 0, 60);
+        //Make sure timscale = 1
         Time.timeScale = 1f;
         Time.fixedDeltaTime = 0.02f;
         this.fixedDeltaTime = Time.fixedDeltaTime;
     }
 
-    // Start is called before the first frame update
     void Start()
     {
+        //Make cross compatible with PC and mobile
+        Input.simulateMouseWithTouches = true;
+
         mainCam = FindObjectOfType<Camera>();
+        playerRigidbody2D = GetComponent<Rigidbody2D>();
+        playerTransform = GetComponent<Transform>();
+
+        //Get access to postprocessing vignette
         v = GameObject.FindGameObjectWithTag("PP").GetComponent<Volume>()?.profile;
         v.TryGet(out vg);
-        //cooldownDuration = cooldownDuration * 0.01f;
-        Input.simulateMouseWithTouches = true;
-        playerRigidbody2D = GetComponent<Rigidbody2D>();
-        //directionVisual = GetComponent<LineRenderer>();
-        playerTransform = GetComponent<Transform>();
     }
 
-    // Update is called once per frame
     void Update()
     {
         blackFlameMat.SetFloat("_VPControl", VPControl);
-        playerPosition = playerTransform.position;
-        //directionVisual.SetPosition(0, playerPosition);
 
         moveDirection = endPointPos - beginPointPos;
         moveDirection.Normalize();
@@ -97,23 +94,14 @@ public class PlayerControls : MonoBehaviour
                 beginPhaseMouse = false;
             }
 
-            //Vector2 aha = new Vector2(playerPosition.x, playerPosition.y) + (moveDirection * moveDirectionDistance);
             endPointPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
-            //float moveDirectionAngle = Vector2.Angle(Vector2.up, moveDirection);
-            //if (moveDirectionAngle < 0.0f) moveDirectionAngle = 360f - moveDirectionAngle;
             moveDirectionAngle = Mathf.Atan2(moveDirection.x, moveDirection.y) * Mathf.Rad2Deg;
             moveDirectionAngle *= -1;
             moveDirectionAngle -= 225f;
 
-            //if(blackFlame.GetComponent<Transform>().localEulerAngles.z == prevMoveDirectionAngle) blackFlame.SetActive(false);
-            //else blackFlame.SetActive(true);
-
             blackFlame.GetComponent<Transform>().localEulerAngles = new Vector3(0, 0, moveDirectionAngle);
-            //directionVisual.SetPosition(1, aha);
             Debug.DrawLine(beginPointPos, endPointPos, Color.green);
-            //Debug.Log("Begin - " + beginPointPos);
-            //Debug.Log("End - " + endPointPos);
             VPControl = moveDirectionDistance;
 
         }
@@ -122,15 +110,12 @@ public class PlayerControls : MonoBehaviour
             if (beginPhaseMouse == false)
             {
                 flameCooldownStarted = false;
-                //prevMoveDirectionAngle = moveDirectionAngle; 
                 playerRigidbody2D.gravityScale = gravity;
                 playerRigidbody2D.velocity = Vector2.zero;
                 playerRigidbody2D.AddForce(moveDirection * moveDirectionDistance * forceMultiplier);
-                //slow down time/game feel vignette idk dat soort shit
                 Time.timeScale = 1f;
                 Time.fixedDeltaTime = this.fixedDeltaTime * Time.timeScale;
             }
-            //directionVisual.SetPosition(1, playerPosition);
             beginPhaseMouse = true;
 
             if (!flameCooldownStarted)
@@ -140,20 +125,8 @@ public class PlayerControls : MonoBehaviour
             }
         }
 
-        //if (!Input.GetMouseButton(0))
-        //{
-        //    if (!flameCooldownStarted) 
-        //    {
-        //        StartFlameCooldown(); 
-        //        flameCooldownStarted = true;
-        //    } 
-        //    //blackFlame.SetActive(false);
-        //    //directionVisual.SetPosition(1, playerPosition);
-        //}
-
         if (VignetteFollowsPlayer)
         {
-            //Debug.Log(Screen.currentResolution);
             vg.center.value = new Vector2(mainCam.WorldToScreenPoint(playerTransform.position).x/mainCam.scaledPixelWidth, mainCam.WorldToScreenPoint(playerTransform.position).y / mainCam.scaledPixelHeight);
         }
     }
@@ -200,17 +173,6 @@ public class PlayerControls : MonoBehaviour
     {
         yield return new WaitForSecondsRealtime(showDurationDelay);
         blackFlame.SetActive(true);
-        //float lerpTime = 0;
-
-        //while (lerpTime < 1)
-        //{
-        //    lerpTime += Time.deltaTime / showDuration;
-        //    float evaluatedLerpTime = showFlameCurve.Evaluate(lerpTime);
-
-        //    blackFlameMat.SetFloat("_OpacityControl", evaluatedLerpTime);
-
-        //    yield return null;
-        //}
 
         yield return null;
     }
