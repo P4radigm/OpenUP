@@ -17,9 +17,12 @@ public class ShowThis : MonoBehaviour
 
     private Coroutine ShowRoutine;
 
+    private AudioManager aM;
+
     private void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");
+        aM = AudioManager.instance;
     }
 
 
@@ -56,12 +59,16 @@ public class ShowThis : MonoBehaviour
 
         Panel.GetComponent<Image>().enabled = true;
         OPEN.GetComponent<TextMeshProUGUI>().enabled = true;
+        aM.Play("C3");
         yield return new WaitForSeconds(showTime);
         OPEN.GetComponent<TextMeshProUGUI>().enabled = false;
         UP.GetComponent<TextMeshProUGUI>().enabled = true;
+        aM.Play("A2_E3");
         yield return new WaitForSeconds(showTime);
         UP.GetComponent<TextMeshProUGUI>().enabled = false;
         Panel.GetComponent<Image>().enabled = false;
+        //aM.Stop("C3");
+        //aM.Stop("A2_E3");
 
         for (int i = 0; i < white.Length; i++)
         {

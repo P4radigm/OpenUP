@@ -35,7 +35,7 @@ Material:
     - VoronoiPower: 3
     - VoronoiScale: 3
     - _OpacityControl: 0
-    - _VPControl: 1.0095505
+    - _VPControl: 6
     m_Colors:
     - AimColour: {r: 64, g: 52.372562, b: 14.792454, a: 1}
     - NoiseScrolling: {r: 0, g: -1, b: 0, a: 0}

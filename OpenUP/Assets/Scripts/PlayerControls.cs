@@ -23,6 +23,12 @@ public class PlayerControls : MonoBehaviour
     [SerializeField] private AnimationCurve opacityCurve;
     [SerializeField] private float showDurationDelay;
 
+    [Header("Audio")]
+    [SerializeField] private float pitchDownDuration;
+    [SerializeField] private AnimationCurve pitchDownCurve;
+    [SerializeField] private float pitchUpDuration;
+    [SerializeField] private AnimationCurve pitchUpCurve;
+
     private Transform playerTransform;
     private Camera mainCam;
     private Rigidbody2D playerRigidbody2D;
@@ -46,6 +52,11 @@ public class PlayerControls : MonoBehaviour
     private float VPControl = 0;
     private bool flameCooldownStarted = true;
 
+    //Audio
+    private AudioManager aM;
+    private Coroutine pitchDownRoutine;
+    private Coroutine pitchUpRoutine;
+
 
 
     private void Awake()
@@ -64,10 +75,14 @@ public class PlayerControls : MonoBehaviour
         mainCam = FindObjectOfType<Camera>();
         playerRigidbody2D = GetComponent<Rigidbody2D>();
         playerTransform = GetComponent<Transform>();
+        aM = AudioManager.instance;
 
         //Get access to postprocessing vignette
         v = GameObject.FindGameObjectWithTag("PP").GetComponent<Volume>()?.profile;
         v.TryGet(out vg);
+
+        pitchDownRoutine = null;
+        pitchUpRoutine = null;
     }
 
     void Update()
@@ -86,6 +101,8 @@ public class PlayerControls : MonoBehaviour
             blackFlameMat.SetFloat("_OpacityControl", 1);
             Time.timeScale = timeSlow;
             Time.fixedDeltaTime = this.fixedDeltaTime * Time.timeScale;
+            StartPitchDown(0.5f);
+
 
             if (beginPhaseMouse == true)
             {
@@ -117,6 +134,8 @@ public class PlayerControls : MonoBehaviour
                 Time.fixedDeltaTime = this.fixedDeltaTime * Time.timeScale;
             }
             beginPhaseMouse = true;
+
+            StartPitchUp(1f);
 
             if (!flameCooldownStarted)
             {
@@ -160,6 +179,8 @@ public class PlayerControls : MonoBehaviour
 
         blackFlame.SetActive(false);
 
+        FlameCooldownRoutine = null;
+
         yield return null;
     }
 
@@ -173,6 +194,76 @@ public class PlayerControls : MonoBehaviour
     {
         yield return new WaitForSecondsRealtime(showDurationDelay);
         blackFlame.SetActive(true);
+
+        yield return null;
+    }
+
+    private void StartPitchDown(float newPitch)
+    {
+        if(pitchDownRoutine != null) 
+        { 
+            return; 
+        }
+        else
+        {
+            pitchDownRoutine = StartCoroutine(PitchDownIE(newPitch));
+        }
+    }
+
+    private IEnumerator PitchDownIE(float nP)
+    {
+        float lerpTime = 0;
+        Debug.Log("Ayy");
+        float _oldPitch = aM.GetPitch("Music");
+
+        while (lerpTime < 1)
+        {
+            lerpTime += Time.deltaTime / pitchDownDuration;
+            float _evaluatedLerpTime = pitchDownCurve.Evaluate(lerpTime);
+
+            float _newPitch = Mathf.Lerp(_oldPitch, nP, _evaluatedLerpTime);
+
+            aM.SetPitch("Music", _newPitch);
+
+            yield return null;
+        }
+
+        pitchDownRoutine = null;
+
+        yield return null;
+    }
+
+    private void StartPitchUp(float newPitch)
+    {
+        if (pitchUpRoutine != null)
+        {
+            return;
+        }
+        else
+        {
+            pitchUpRoutine = StartCoroutine(PitchUpIE(newPitch));
+        }
+    }
+
+    private IEnumerator PitchUpIE(float nP)
+    {
+        float lerpTime = 0;
+
+        float _oldPitch = aM.GetPitch("Music");
+
+        while (lerpTime < 1)
+        {
+            lerpTime += Time.deltaTime / pitchUpDuration;
+            float _evaluatedLerpTime = pitchUpCurve.Evaluate(lerpTime);
+
+            float _newPitch = Mathf.Lerp(_oldPitch, nP, _evaluatedLerpTime);
+
+            aM.SetPitch("Music", _newPitch);
+
+            yield return null;
+        }
+
+        pitchUpRoutine = null;
 
         yield return null;
     }
