@@ -20,17 +20,17 @@ public class TutorialManager : MonoBehaviour
 
     IEnumerator Tutorial(float start, float word, float space)
     {
-        yield return new WaitForSeconds(start);
+        yield return new WaitForSecondsRealtime(start);
             SWIPE.GetComponent<TextMeshProUGUI>().enabled = true;
-        yield return new WaitForSeconds(word);
+        yield return new WaitForSecondsRealtime(word);
             SWIPE.GetComponent<TextMeshProUGUI>().enabled = false;
-        yield return new WaitForSeconds(space);
+        yield return new WaitForSecondsRealtime(space);
             TO.GetComponent<TextMeshProUGUI>().enabled = true;
-        yield return new WaitForSeconds(word);
+        yield return new WaitForSecondsRealtime(word);
             TO.GetComponent<TextMeshProUGUI>().enabled = false;
-        yield return new WaitForSeconds(space);
+        yield return new WaitForSecondsRealtime(space);
             MOVE.GetComponent<TextMeshProUGUI>().enabled = true;
-        yield return new WaitForSeconds(word);
+        yield return new WaitForSecondsRealtime(word);
             MOVE.GetComponent<TextMeshProUGUI>().enabled = false;
 
         this.gameObject.SetActive(false);

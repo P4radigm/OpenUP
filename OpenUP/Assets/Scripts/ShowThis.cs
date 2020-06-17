@@ -60,11 +60,11 @@ public class ShowThis : MonoBehaviour
         Panel.GetComponent<Image>().enabled = true;
         OPEN.GetComponent<TextMeshProUGUI>().enabled = true;
         aM.Play("C3");
-        yield return new WaitForSeconds(showTime);
+        yield return new WaitForSecondsRealtime(showTime);
         OPEN.GetComponent<TextMeshProUGUI>().enabled = false;
         UP.GetComponent<TextMeshProUGUI>().enabled = true;
         aM.Play("A2_E3");
-        yield return new WaitForSeconds(showTime);
+        yield return new WaitForSecondsRealtime(showTime);
         UP.GetComponent<TextMeshProUGUI>().enabled = false;
         Panel.GetComponent<Image>().enabled = false;
         //aM.Stop("C3");
