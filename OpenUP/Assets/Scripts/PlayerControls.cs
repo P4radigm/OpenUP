@@ -24,6 +24,7 @@ public class PlayerControls : MonoBehaviour
     [SerializeField] private float showDurationDelay;
 
     [Header("Audio")]
+    [SerializeField] private float lowPitch;
     [SerializeField] private float pitchDownDuration;
     [SerializeField] private AnimationCurve pitchDownCurve;
     [SerializeField] private float pitchUpDuration;
@@ -101,11 +102,11 @@ public class PlayerControls : MonoBehaviour
             blackFlameMat.SetFloat("_OpacityControl", 1);
             Time.timeScale = timeSlow;
             Time.fixedDeltaTime = this.fixedDeltaTime * Time.timeScale;
-            StartPitchDown(0.5f);
 
 
             if (beginPhaseMouse == true)
             {
+                StartPitchDown(lowPitch);
                 StartShowFlame();
                 beginPointPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
                 beginPhaseMouse = false;
@@ -132,10 +133,10 @@ public class PlayerControls : MonoBehaviour
                 playerRigidbody2D.AddForce(moveDirection * moveDirectionDistance * forceMultiplier);
                 Time.timeScale = 1f;
                 Time.fixedDeltaTime = this.fixedDeltaTime * Time.timeScale;
+                StartPitchUp(1f);
             }
             beginPhaseMouse = true;
 
-            StartPitchUp(1f);
 
             if (!flameCooldownStarted)
             {
@@ -206,6 +207,7 @@ public class PlayerControls : MonoBehaviour
         }
         else
         {
+            //Debug.Log("Start Pitch Down");
             pitchDownRoutine = StartCoroutine(PitchDownIE(newPitch));
         }
     }
@@ -213,7 +215,7 @@ public class PlayerControls : MonoBehaviour
     private IEnumerator PitchDownIE(float nP)
     {
         float lerpTime = 0;
-        Debug.Log("Ayy");
+
         float _oldPitch = aM.GetPitch("Music");
 
         while (lerpTime < 1)
@@ -241,6 +243,7 @@ public class PlayerControls : MonoBehaviour
         }
         else
         {
+            //Debug.Log("Start Pitch Up");
             pitchUpRoutine = StartCoroutine(PitchUpIE(newPitch));
         }
     }

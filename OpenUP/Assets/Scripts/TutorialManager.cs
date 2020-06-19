@@ -13,8 +13,11 @@ public class TutorialManager : MonoBehaviour
     [SerializeField] private GameObject TO;
     [SerializeField] private GameObject MOVE;
 
+    private AudioManager aM;
+
     void Start()
     {
+        aM = AudioManager.instance;
         StartCoroutine(Tutorial(startTiming, wordTiming, spaceTiming));
     }
 
@@ -22,14 +25,17 @@ public class TutorialManager : MonoBehaviour
     {
         yield return new WaitForSecondsRealtime(start);
             SWIPE.GetComponent<TextMeshProUGUI>().enabled = true;
+            aM.Play("Beat1");
         yield return new WaitForSecondsRealtime(word);
             SWIPE.GetComponent<TextMeshProUGUI>().enabled = false;
         yield return new WaitForSecondsRealtime(space);
             TO.GetComponent<TextMeshProUGUI>().enabled = true;
+            aM.Play("Beat1");
         yield return new WaitForSecondsRealtime(word);
             TO.GetComponent<TextMeshProUGUI>().enabled = false;
         yield return new WaitForSecondsRealtime(space);
             MOVE.GetComponent<TextMeshProUGUI>().enabled = true;
+            aM.Play("Beat1");
         yield return new WaitForSecondsRealtime(word);
             MOVE.GetComponent<TextMeshProUGUI>().enabled = false;
 

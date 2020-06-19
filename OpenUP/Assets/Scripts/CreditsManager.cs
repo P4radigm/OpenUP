@@ -74,24 +74,29 @@ public class CreditsManager : MonoBehaviour
 
         yield return new WaitForSecondsRealtime(start);
             YOU.GetComponent<TextMeshProUGUI>().enabled = true;
+            aM.Play("Beat2");
         yield return new WaitForSecondsRealtime(word);
             YOU.GetComponent<TextMeshProUGUI>().enabled = false;
         yield return new WaitForSecondsRealtime(space);
             WIN.GetComponent<TextMeshProUGUI>().enabled = true;
+            aM.Play("Beat2");
         yield return new WaitForSecondsRealtime(word);
             WIN.GetComponent<TextMeshProUGUI>().enabled = false;
 
         yield return new WaitForSecondsRealtime(enter);
 
             YOU.GetComponent<TextMeshProUGUI>().enabled = true;
+            aM.Play("Beat2");
         yield return new WaitForSecondsRealtime(word);
             YOU.GetComponent<TextMeshProUGUI>().enabled = false;
         yield return new WaitForSecondsRealtime(space);
             OPENED.GetComponent<TextMeshProUGUI>().enabled = true;
+            aM.Play("Beat2");
         yield return new WaitForSecondsRealtime(word);
             OPENED.GetComponent<TextMeshProUGUI>().enabled = false;
         yield return new WaitForSecondsRealtime(space);
             UP.GetComponent<TextMeshProUGUI>().enabled = true;
+            aM.Play("Beat2");
         yield return new WaitForSecondsRealtime(word);
             UP.GetComponent<TextMeshProUGUI>().enabled = false;
 
